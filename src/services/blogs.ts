@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { IBlog } from '../interfaces/blog'
-const baseUrl = 'http://localhost:3001/api/blogs'
+const baseUrl = '/api/blogs'
 
 let token = ""
 
@@ -12,7 +12,7 @@ const getAll = async (): Promise<IBlog[]> => {
   console.log(`connecting to ${baseUrl}`)
   try {
     const response = await axios.get<IBlog[]>(baseUrl);
-    return response.data
+    return response.data.reverse()
   } catch {
     console.error;
     return []
