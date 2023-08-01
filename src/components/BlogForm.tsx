@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IBlog } from "../interfaces/blog"
+import { IBlog } from "../interfaces/blog";
 import blogService from "../services/blogs";
 import { INotification } from "../interfaces/notification";
 import axios, { AxiosError } from "axios";
@@ -54,38 +54,46 @@ const BlogForm = ({ setBlogs, setNotification }: IBlogFormProps) => {
 
   return (
   <form onSubmit={(e) => { void addBlog(e) }}>
-    <label htmlFor="title" >Title</label>
-    <input
-      type="text"
-      id="title"
-      name="title"
-      value={title}
-      onChange={(e) => handleFieldChange(e, "title")}
-    />
-    <label htmlFor="author" >Author</label>
-    <input
-      type="text"
-      id="author"
-      name="author"
-      value={author}
-      onChange={(e) => handleFieldChange(e, "author")}
-    />
-    <label htmlFor="url" >Url</label>
-    <input
-      type="text"
-      id="url"
-      name="url"
-      value={url}
-      onChange={(e) => handleFieldChange(e, "url")}
-    />
-    <label htmlFor="likes" >Likes</label>
-    <input
-      type="number"
-      id="likes"
-      name="likes"
-      value={likes}
-      onChange={(e) => handleFieldChange(e, "likes")}
-    />
+    <div className="form-field">
+      <label htmlFor="title" >Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value={title}
+        onChange={(e) => handleFieldChange(e, "title")}
+      />
+    </div>
+    <div className="form-field">
+      <label htmlFor="author" >Author</label>
+      <input
+        type="text"
+        id="author"
+        name="author"
+        value={author}
+        onChange={(e) => handleFieldChange(e, "author")}
+      />
+    </div>
+    <div className="form-field">
+      <label htmlFor="url" >Url</label>
+      <input
+        type="text"
+        id="url"
+        name="url"
+        value={url}
+        onChange={(e) => handleFieldChange(e, "url")}
+      />
+    </div>
+    <div className="form-field">
+      <label htmlFor="likes" >Likes</label>
+      <input
+        type="number"
+        id="likes"
+        name="likes"
+        value={likes}
+        onChange={(e) => handleFieldChange(e, "likes")}
+      />
+    </div>
     <button type="submit">save</button>
   </form>
 )};

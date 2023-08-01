@@ -8,3 +8,10 @@ export interface IBlog {
   user?:   IUser;
   id?:     string;
 }
+
+export interface UpdatableBlogParameters {
+  title?:  string;
+  author?: string;
+  url?:    string;
+  likes?:  number;
+}

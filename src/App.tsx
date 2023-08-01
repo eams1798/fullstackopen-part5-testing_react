@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm'
 import UserInterface from './components/UserInterface'
 import Notification from './components/Notification'
 import { INotification } from './interfaces/notification'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -20,7 +21,7 @@ const App = () => {
     const getAllBlogs = async() => {
       try {
         const blogs = await blogService.getAll()
-        setBlogs( blogs );
+        setBlogs( blogs.sort((a, b) => (b.likes || 0) - (a.likes || 0)) );
       } catch {
         console.error;
       }
@@ -45,16 +46,21 @@ const App = () => {
         objNotification={notification}
         setNotification={setNotification} />
       {!user?
+      <Togglable openButtonLabel="Login">
+        <></>
         <LoginForm
           setUser={setUser}
-          setNotification={setNotification} />:
-        <UserInterface
-          blogs={blogs}
-          setBlogs={setBlogs}
-          user={user}
-          setUser={setUser}
           setNotification={setNotification} />
-          }
+      </Togglable>
+        :
+          <></>
+        }
+      <UserInterface
+        blogs={blogs}
+        setBlogs={setBlogs}
+        user={user}
+        setUser={setUser}
+        setNotification={setNotification} />
     </div>
   );
 }
