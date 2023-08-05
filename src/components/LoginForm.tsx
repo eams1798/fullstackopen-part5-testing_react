@@ -16,19 +16,19 @@ const LoginForm = ({ setUser, setNotification }: ILoginProps) => {
   const [password, setPassword] = useState<string>("");
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     try {
       const user = await loginService.login({
         username, password,
-      })
+      });
       blogService.setToken(user.token);
       window.localStorage.setItem(
-        'loggedBlogAppUser', JSON.stringify(user)
+        "loggedBlogAppUser", JSON.stringify(user)
       );
-      setUser(user)
-      setUsername('')
-      setPassword('')
+      setUser(user);
+      setUsername("");
+      setPassword("");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
@@ -41,13 +41,13 @@ const LoginForm = ({ setUser, setNotification }: ILoginProps) => {
         console.log(error);
       }
     }
-  }
-  
+  };
+
   return (
-    <form onSubmit={(e) => { void handleLogin(e) }}>
+    <form onSubmit={(e) => { void handleLogin(e); }}>
       <div>
         <label htmlFor="username" >Username</label>
-          <input
+        <input
           type="text"
           id="username"
           value={username}
@@ -57,7 +57,7 @@ const LoginForm = ({ setUser, setNotification }: ILoginProps) => {
       </div>
       <div>
         <label htmlFor="password" >Password</label>
-          <input
+        <input
           type="password"
           id="password"
           value={password}
@@ -66,8 +66,8 @@ const LoginForm = ({ setUser, setNotification }: ILoginProps) => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
-  )
+    </form>
+  );
 };
 
 

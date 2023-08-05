@@ -1,4 +1,4 @@
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, forwardRef, useImperativeHandle } from "react";
 
 interface TogglableProps {
     openButtonLabel: string,
@@ -6,22 +6,22 @@ interface TogglableProps {
     children: JSX.Element[]
 }
 
-const Togglable = forwardRef(({openButtonLabel, closeButtonLabel, children}: TogglableProps, refs) => {
+const Togglable = forwardRef(({ openButtonLabel, closeButtonLabel, children }: TogglableProps, refs) => {
   const [visible, setVisible] = useState(false);
 
-  const hideWhenVisible = { display: visible ? 'none' : '' };
-  const showWhenVisible = { display: visible ? '' : 'none' };
+  const hideWhenVisible = { display: visible ? "none" : "" };
+  const showWhenVisible = { display: visible ? "" : "none" };
 
   const [componentOnHide, componentOnShow] = children;
 
   const toggleVisibility = () => {
-    setVisible(!visible)
+    setVisible(!visible);
   };
 
   useImperativeHandle(refs, () => {
     return {
       toggleVisibility
-    }
+    };
   });
 
   return (
@@ -38,4 +38,4 @@ const Togglable = forwardRef(({openButtonLabel, closeButtonLabel, children}: Tog
   );
 });
 
-export default Togglable
+export default Togglable;

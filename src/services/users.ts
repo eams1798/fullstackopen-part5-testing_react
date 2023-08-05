@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { IUser } from '../interfaces/user'
-const baseUrl = '/api/users'
+import axios from "axios";
+import { IUser } from "../interfaces/user";
+const baseUrl = "/api/users";
 
 /* let token = ""
 
@@ -15,9 +15,9 @@ const getAll = async (): Promise<IUser[]> => {
     return response.data.reverse();
   } catch {
     console.error;
-    return []
+    return [];
   }
-}
+};
 
 const get = async (userId: string): Promise<IUser | null> => {
   try {
@@ -27,7 +27,7 @@ const get = async (userId: string): Promise<IUser | null> => {
     console.error;
     return null;
   }
-}
+};
 
 /* modify to create, update or delete user, not blog
 const create = async (newBlog: IUser): Promise<IUser> => {
@@ -37,7 +37,7 @@ const create = async (newBlog: IUser): Promise<IUser> => {
     }
   }
   const { data }: { data: IUser } = await axios.post(baseUrl, newBlog, config);
-  
+
   return data;
 }
 
@@ -49,7 +49,7 @@ const update = async (blogId: string, parameters: UpdatableBlogParameters): Prom
     }
   }
   const { data }: { data: IUser } = await axios.put(`${baseUrl}/${blogId}`, parameters, config);
-  
+
   return data;
 }
 const remove = async (blogId: string): Promise<void> => {
@@ -60,4 +60,4 @@ const remove = async (blogId: string): Promise<void> => {
   }
   await axios.delete(`${baseUrl}/${blogId}`, config);
 } */
-export default { getAll, get }
+export default { getAll, get };
