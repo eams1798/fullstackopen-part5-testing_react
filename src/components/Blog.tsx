@@ -7,13 +7,14 @@ import axios, { AxiosError } from "axios";
 import { ErrorResponse } from "../interfaces/login";
 
 interface IBlogProps {
+  id?: string,
   blog: IBlog,
   setBlogs: React.Dispatch<React.SetStateAction<IBlog[]>>,
   user: IUser | null,
   setNotification: React.Dispatch<React.SetStateAction<INotification>>
 }
 
-const Blog = ({ blog, setBlogs, user, setNotification }: IBlogProps) => {
+const Blog = ({ id, blog, setBlogs, user, setNotification }: IBlogProps) => {
   const like = async () => {
     const updatedBlog = await blogService.update(blog.id || "", {
       likes: (blog.likes || 0) + 1
@@ -56,23 +57,25 @@ const Blog = ({ blog, setBlogs, user, setNotification }: IBlogProps) => {
     }
   };
   return (
-    <Togglable openButtonLabel="show" closeButtonLabel="hide">
-      <h3>{blog.title}</h3>
-      <>
-        <ul><h3>{blog.title}</h3>
-          <li>Author: {blog.author}</li>
-          <li>URL: {blog.url}</li>
-          <li>
-          Likes: {blog.likes}
-            {user?
-              <button onClick={() => void like()}>Like</button>
-              :<></>}
-            {blog.user?.username === user?.username ?
-              <button onClick={() => void remove()}>Delete</button>: <></>}
-          </li>
-        </ul>
-      </>
-    </Togglable>
+    <div id={id}>
+      <Togglable openButtonLabel="show" closeButtonLabel="hide">
+        <h3 className="blog-title">{blog.title} by {blog.author}</h3>
+        <>
+          <ul className="blog-content"><h3>{blog.title}</h3>
+            <li>Author: {blog.author}</li>
+            <li>URL: {blog.url}</li>
+            <li>
+            Likes: {blog.likes}
+              {user?
+                <button className="btn-like" onClick={() => void like()}>Like</button>
+                :<></>}
+              {blog.user?.username === user?.username ?
+                <button className="btn-delete" onClick={() => void remove()}>Delete</button>: <></>}
+            </li>
+          </ul>
+        </>
+      </Togglable>
+    </div>
   );};
 
 export default Blog;

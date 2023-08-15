@@ -31,7 +31,7 @@ const Notification = ({ objNotification, setNotification }: INotiifProps) => {
   }, [objNotification]);
 
   return ( !objNotification.message? <></>:
-    <div className="notification" style={styleNotif}>
+    <div id="notification" style={styleNotif}>
       {objNotification.message}
     </div>
   );

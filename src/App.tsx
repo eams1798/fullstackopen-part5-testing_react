@@ -46,7 +46,7 @@ const App = () => {
         objNotification={notification}
         setNotification={setNotification} />
       {!user?
-        <Togglable openButtonLabel="Login">
+        <Togglable openButtonLabel="Login" isVisible>
           <></>
           <LoginForm
             setUser={setUser}

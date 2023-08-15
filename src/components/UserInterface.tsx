@@ -26,15 +26,17 @@ const UserInterface = ({ blogs, setBlogs, user, setUser, setNotification }: UIPr
         <>
           <p>{user.name} logged in</p>
           <button onClick={logout}>Logout</button>
-          <Togglable openButtonLabel='New note'>
+          <Togglable openButtonLabel='New blog'>
             <></>
             <BlogForm setBlogs={setBlogs} setNotification={setNotification} />
           </Togglable>
         </>
         :<></>}
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} setBlogs={setBlogs} user={user} setNotification={setNotification} />
-      )}
+      <div id="blog-list">
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} setBlogs={setBlogs} user={user} setNotification={setNotification} />
+        )}
+      </div>
     </div>
   );
 };

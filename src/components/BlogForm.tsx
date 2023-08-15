@@ -53,7 +53,7 @@ const BlogForm = ({ setBlogs, setNotification }: IBlogFormProps) => {
   };
 
   return (
-    <form onSubmit={(e) => { void addBlog(e); }}>
+    <form id="form-addBlog" onSubmit={(e) => { void addBlog(e); }}>
       <div className="form-field">
         <label htmlFor="title" >Title</label>
         <input
@@ -94,7 +94,7 @@ const BlogForm = ({ setBlogs, setNotification }: IBlogFormProps) => {
           onChange={(e) => handleFieldChange(e, "likes")}
         />
       </div>
-      <button type="submit">save</button>
+      <button className="btn-add" type="submit">Add blog</button>
     </form>
   );};
 

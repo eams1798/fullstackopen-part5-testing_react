@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: { browser: true, es2020: true, "jest/globals": true, cypress: true },
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -16,7 +16,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh", "jest"],
+  plugins: ["react-refresh", "jest", "cypress"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
@@ -54,7 +54,7 @@ module.exports = {
   overrides: [
     {
       files: ["**/*.js"],
-      excludedFiles: "*.eslintrc.cjs"
+      excludedFiles: ["*.eslintrc.cjs", "jest.config.cjs"]
     },
     {
       files: ["**/*.ts", "**/*.tsx"],

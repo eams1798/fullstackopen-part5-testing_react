@@ -3,6 +3,12 @@ export interface loginCredentials {
   password: string
 }
 
+export interface signUpCredentials {
+  name: string,
+  username: string,
+  password: string
+}
+
 export interface loginResponse {
   token: string,
   username: string,
