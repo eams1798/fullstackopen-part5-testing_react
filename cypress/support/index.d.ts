@@ -6,7 +6,10 @@ declare namespace Cypress {
       visitFrontend(): void;
       login(credentials: { username: string, password: string }): void;
       createBlog(blogContent: IBlog): void;
-      createTestingUser(): void;
+      createTestingUser(data: {
+        name: string,
+        username: string,
+        password: string}): void;
       resetDatabase(): void;
     }
   }

@@ -1,7 +1,11 @@
 describe('Blog app', function() {
   beforeEach(function() {
     cy.resetDatabase();
-    cy.createTestingUser();
+    cy.createTestingUser({
+      name: 'Robert C. Martin',
+      username: 'UncleBob',
+      password: '1234abcde'
+    });
     cy.visitFrontend();
   })
 
@@ -28,9 +32,13 @@ describe('Blog app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.get('#username').type('UncleBob')
+      cy.login({
+        username: 'UncleBob',
+        password: '1234abcde'
+      })
+      /* cy.get('#username').type('UncleBob')
       cy.get('#password').type('1234abcde')
-      cy.get('#btn-login').click()
+      cy.get('#btn-login').click() */
       // for any reason, the app can't update with direct fetch login
     })
 
@@ -62,28 +70,36 @@ describe('Blog app', function() {
           url: 'https://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html',
           likes: 5
         })
-        cy.contains('My first blog').contains('show').click()
+        cy.visitFrontend()
+        cy.contains('My first blog by Robert C. Martin').parent().contains('show').click()
       })
 
       it('A blog can be liked', function() {
-        cy.contains('My first blog').contains('like').click()
-        cy.get('#likes').should('contain', '6')
+        cy.get(".blog-content").contains('My first blog').parent().get(".btn-like").click()
+        cy.get(".blog-content").contains('My first blog').parent().contains('Likes: 6')
       })
 
       it('A blog can be removed', function() {
-        cy.contains('My first blog').contains('Delete').click()
+        cy.get(".blog-content").contains('My first blog').parent().get(".btn-delete").click()
         cy.get('#notification')
           .should('contain', 'Blog My first blog by Robert C. Martin deleted succesfully')
           .and('have.css', 'color', 'rgb(0, 128, 0)')
-        cy.should('not.contain', 'My first blog')
+        cy.get('#blog-list').should('not.contain', 'My first blog')
       })
 
-      it("A blog can't be removed if it doesn't belong to the user", function() {
-        cy.get('#blogs')
-          .should('not.contain', 'My first blog')
-          .then((blogs) => {
-            cy.wrap(blogs[0]).should('not.contain', 'Delete')
-          })
+      it("A blog don't have the button delete if it doesn't belong to the user", function() {
+        cy.contains('Logout').click()
+        cy.createTestingUser({
+          name: 'Mary Smith',
+          username: 'MaryS',
+          password: 'abcde123'
+        })
+        cy.login({
+          username: 'MaryS',
+          password: 'abcde123'
+        })
+        cy.visitFrontend()
+        cy.get('#blog-list').contains('My first blog').parent().get(".btn-delete").should('not.exist')
       })
     })
 
@@ -107,20 +123,32 @@ describe('Blog app', function() {
           url: 'https://blog.cleancoder.com/uncle-bob/2017/05/05/MyThirdBlog.html',
           likes: 15
         })
+        cy.visitFrontend()
       })
       
       it('Blogs are ordered by likes', function() {
-        cy.get('#blogs').eq(0).should('contain', 'My third blog').and('contain', '15')
-        cy.get('#blogs').eq(1).should('contain', 'My second blog').and('contain', '10')
-        cy.get('#blogs').eq(2).should('contain', 'My first blog').and('contain', '5')
+        cy.get('#blog-list>div').eq(0).should('contain', 'My third blog').and('contain', '15')
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '10')
+        cy.get('#blog-list>div').eq(2).should('contain', 'My first blog').and('contain', '5')
 
-        cy.get('#blogs').eq(1).contains('like').click().click().click().click().click().click()
-        cy.get('#blogs').eq(1).should('contain', 'My second blog').and('contain', '16')
+        cy.get('#blog-list>div').eq(1).find('.btn-show').click()
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '11')
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '12')
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '13')
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '14')
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '15')
+        cy.get('#blog-list>div').eq(1).find('.btn-like').click()
+        cy.get('#blog-list>div').eq(1).should('contain', 'My second blog').and('contain', '16')
         cy.visitFrontend()
         
-        cy.get('#blogs').eq(0).should('contain', 'My second blog').and('contain', '16');
-        cy.get('#blogs').eq(1).should('contain', 'My third blog').and('contain', '15');
-        cy.get('#blogs').eq(2).should('contain', 'My first blog').and('contain', '5');
+        cy.get('#blog-list>div').eq(0).should('contain', 'My second blog').and('contain', '16');
+        cy.get('#blog-list>div').eq(1).should('contain', 'My third blog').and('contain', '15');
+        cy.get('#blog-list>div').eq(2).should('contain', 'My first blog').and('contain', '5');
       })
     })
 
